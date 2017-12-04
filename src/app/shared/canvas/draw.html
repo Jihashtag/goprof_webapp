@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>goProf2</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;"/>
+      <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+      <style type="text/css">
+        body{margin:0px; background-color:#fff;}
+        canvas {position: absolute; top:0px; left:0px; bottom:0px; right: 0; display:none;}
+        canvas.visible {display:block;}
+      </style>
+
+   </head>
+        <body>10</body>
+    
+    <script src="lib/es6-promise.min.js"></script>
+    <script src="lib/nativescript-webview-interface.js"></script>
+    <script src="lib/hdpicanvas.js"></script>
+    <script type="text/javascript">
+
+
+        //native interface
+        var oWebViewInterface = window.nsWebViewInterface;
+
+        //direct draw -> true draws on screen and sends to server, false sends to server waits for return
+        var directDraw = true; //if true, need to be adjusted on server (send only to others)
+
+
+
+        //remove defaults
+        document.ontouchstart = function(e){ e.preventDefault(); }
+        document.ontouchmove = function(e){ e.preventDefault(); }
+
+
+        //add roundTo method on numbers
+        Number.prototype.roundTo = function(num) 
+        {
+            var resto = this % num;
+            if (resto <= (num/2)) { 
+            return this-resto;
+            } else {
+            return this+num-resto;
+            }
+        }
+
+
+
+        //Variables
+        var width  = window.innerWidth;
+        var height = window.innerHeight;
+        var ctx;
+        var ctxList = {};
+        var canvas;
+        var pointer = {};
+
+        // mouse event variables
+		var focusPoint = {x : 0, y: 0 };
+      	var dragStart;		
+		var twofingers = false;
+		var lastFingerdistance = 0;
+
+        
+//Touch Start
+      function start(evt)
+	  {
+
+          if(evt.touches.length == 2) //2 doigts
+			{
+				twofingers = true;
+				
+				focusPoint.x = evt.touches[0].pageX;
+				focusPoint.y = evt.touches[0].pageY;
+				dragStart = ctx.transformedPoint(focusPoint.x,focusPoint.y);
+
+				lastFingerdistance = fingerDistance(evt);
+
+
+			}
+
+		 
+		  else
+		  {
+
+                pointer = ctx.transformedPoint( evt.touches[0].pageX, evt.touches[0].pageY );
+				pointer.down = true;
+
+		  }
+ 
+		  
+      }
+
+//Touch Move
+      function move(evt)
+	  {
+        
+			if(twofingers)
+			{
+				
+				
+				focusPoint.x = evt.touches[0].pageX;
+				focusPoint.y = evt.touches[0].pageY;
+				
+				
+
+
+				//zoom
+				var factor = fingerDistance(evt) / lastFingerdistance
+				ctx.scale(factor,factor);
+				lastFingerdistance = fingerDistance(evt);
+
+
+				//move
+				var pt = ctx.transformedPoint(focusPoint.x,focusPoint.y);
+				ctx.translate(pt.x-dragStart.x,pt.y-dragStart.y);
+
+
+				redraw();
+			}
+
+			else if(pointer.down)
+			{
+                var transformed = ctx.transformedPoint( evt.touches[0].pageX, evt.touches[0].pageY );
+                
+                if(directDraw) drawSegment({sx : pointer.x, sy : pointer.y, ex : transformed.x, ey : transformed.y});
+                oWebViewInterface.emit('drawLine',{sx : pointer.x, sy : pointer.y, ex : transformed.x, ey : transformed.y});
+
+				pointer.x = transformed.x;
+				pointer.y = transformed.y;
+			}
+
+		  
+      }
+
+
+//Touch End
+      function end(evt)
+	  {
+        
+		  if(twofingers)
+			{
+				twofingers = false;
+				dragStart = null;
+			}
+		  else
+		  {
+			pointer.down = false;
+            updateThumbnail();  
+		  }
+		  
+
+      }
+
+        
+
+        function drawSegment(coords)
+        {
+
+
+            ctx.segments.push(coords);
+
+          ctx.beginPath();
+          ctx.moveTo(coords.sx, coords.sy);
+          ctx.lineTo(coords.ex, coords.ey);
+          ctx.stroke();
+        }
+
+        oWebViewInterface.on('drawLine', function(data)
+        {
+            drawSegment(data);
+        });
+
+
+
+
+
+        oWebViewInterface.on('createPage', function(data)
+        {
+            
+            console.log(data);
+
+
+            var canvas = document.createElement("canvas");
+            document.body.appendChild(canvas);
+
+            canvas.id = "c_"+data.id;
+            canvas.height = height;
+            canvas.width = width;
+
+            
+
+            
+            ctxList[canvas.id] = canvas.getContext('2d'); 
+
+
+            //add geo tracking methods to ctx
+			trackTransforms(ctxList[canvas.id]);
+
+
+            //default parameters
+            ctxList[canvas.id].lineWidth = 2;
+            ctxList[canvas.id].lineJoin = 'round';
+            ctxList[canvas.id].lineCap = 'round';
+            ctxList[canvas.id].strokeStyle = '#29536e';
+            ctxList[canvas.id].fillStyle = '#29536e';
+
+
+            //create segment container
+            ctxList[canvas.id].segments = [];
+
+
+            //indiquer le ctx type
+            ctxList[canvas.id].pageType = data.pageType;
+
+            //Ajouter le fond
+            drawBackground(ctxList[canvas.id]);
+
+
+            //Events Touch
+            canvas.addEventListener('touchstart', start, 0);
+            canvas.addEventListener('touchend', end, 0);
+            canvas.addEventListener('touchmove', move, 0);
+
+
+            //Si il y a un image, on ajoute l'image sur le canvas
+            if(data.src)
+            {
+                var image = new img();
+                image.onload = function() {
+                    ctxList[canvas.id].drawimg(image, 0, 0);
+                    ctxList[canvas.id].image = image
+
+                    
+                };
+                image.src = data.src;
+            }  
+
+           
+
+             
+
+            if(data.pageType == "copy")
+            {
+                   var currentCanvas = document.getElementsByClassName("visible")[0];
+                    ctxList[canvas.id].drawimg(currentCanvas, 0, 0, canvas.width, canvas.height);
+            }    
+
+
+            
+        });
+
+
+
+       
+
+
+
+        oWebViewInterface.on('openPage', (data) =>
+        {
+            var visibles = document.getElementsByClassName("visible");
+
+            for(var i = 0; i < visibles.length; i++)
+            {
+                visibles[i].classList.remove("visible");
+            }    
+
+
+            var canvas = document.getElementById('c_'+data.id);
+            canvas.classList.add("visible");
+
+            ctx = ctxList[canvas.id];
+
+
+            updateThumbnail();
+                
+                
+       
+
+        });
+
+
+
+
+function drawBackground(ctx)
+{
+    var tl = ctx.transformedPoint( 0, 0 );
+    var br = ctx.transformedPoint( width, height );
+    ctx.lineWidth = 1; ctx.strokeStyle = '#eee'; ctx.fillStyle = '#eee';
+    
+    
+    if(ctx.pageType == "grid")  
+            {
+                ctx.beginPath(); 
+                //lignes verticales
+                for( x = tl.x.roundTo(25); x < br.x; x+=25)
+                {
+                    ctx.moveTo(x,tl.y);
+                    ctx.lineTo(x,br.y);
+                }  
+                //lignes horizontales
+                for( y = tl.y.roundTo(25); y < br.y; y+=25)
+                {
+                    ctx.moveTo(tl.x,y);
+                    ctx.lineTo(br.x,y);
+                }
+                ctx.stroke();
+            }
+
+
+    if(ctx.pageType == "isometric")
+            {
+                ctx.beginPath();
+                //lignes verticalles
+                for( x = tl.x.roundTo(25); x < br.x; x+=25)
+                {
+                    ctx.moveTo(x,tl.y);
+                    ctx.lineTo(x,br.y);
+                }  
+
+
+                //diag1
+                for( y = tl.y.roundTo(25)-375; y < br.y; y+=25)
+                {
+                    ctx.moveTo(tl.x,y);
+                    ctx.lineTo(br.x,y+375);
+                } 
+
+                //diag2
+                for( y = tl.y.roundTo(25)-375; y < br.y; y+=25)
+                {
+                    ctx.moveTo(tl.x,y);
+                    ctx.lineTo(br.x,y-375);
+                } 
+
+                ctx.stroke();
+            }
+
+    //clean parameters
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#29536e';
+    ctx.fillStyle = '#29536e';
+
+
+
+    //ajouter image si il y en a une
+    if(ctx.image)
+    {
+        console.log('has to draw image..');
+        ctx.drawimg(ctx.image, 0, 0);
+    } 
+}
+
+
+
+
+
+
+
+
+//export canvas data
+
+ function getCanvasimg()
+        {
+            return document.getElementsByClassName("visible")[0].toDataURL("image/jpeg");
+        }
+
+        function getCanvasThumbnail()
+        {
+            var currentCanvas = document.getElementsByClassName("visible")[0];
+
+            var minicanvas = document.createElement('canvas');
+            minicanvas.width = Math.round(currentCanvas.width/2);
+            minicanvas.height = Math.round(currentCanvas.height/2);
+            var minictx = minicanvas.getContext("2d");
+            
+            //première passe (antialiasing)
+            minictx.drawimg(currentCanvas, 0, 0, minicanvas.width, minicanvas.height);
+  
+            //deuxième passe
+            minictx.drawimg(minicanvas, 0, 0, Math.round(minicanvas.width/2), Math.round(minicanvas.height/2));
+
+            //passe finale
+            var resultCanvas = document.createElement('canvas');
+            resultCanvas.width = 124;
+            resultCanvas.height = 200;
+            var resultctx = resultCanvas.getContext("2d");
+
+            resultctx.drawimg(minicanvas,0,0,Math.round(minicanvas.width/2), Math.round(minicanvas.height/2),
+                             0,0,resultCanvas.width,resultCanvas.height);
+            
+            return resultCanvas.toDataURL("image/jpeg");
+        }
+
+        function getCanvasData()
+        {
+            return {image : getCanvasimg(), thumbnail : getCanvasThumbnail()};
+        }
+
+
+
+        var thumbnailTimeOut;
+        function updateThumbnail() //timeout pour ne pas trop en faire...
+        {
+            clearTimeout(thumbnailTimeOut);
+            thumbnailTimeOut = setTimeout(function()
+            { 
+                oWebViewInterface.emit('updateThumbnail', getCanvasThumbnail());
+            }, 300);
+        }
+
+
+
+
+
+
+
+
+//redraw function (called everytime we move or scale)
+		function redraw()
+		{     
+                // Reset the canvas
+				ctx.save();
+				ctx.setTransform(1,0,0,1,0,0);
+				ctx.clearRect(0,0,width,height);
+				ctx.restore();
+
+                //redraw background // images
+                drawBackground(ctx);
+
+				// redraw all lines
+				ctx.beginPath();
+				for (var i = 0; i < ctx.segments.length; i++) 
+				{
+					ctx.moveTo(ctx.segments[i].sx, ctx.segments[i].sy);
+					ctx.lineTo(ctx.segments[i].ex, ctx.segments[i].ey);
+				}
+				ctx.stroke();
+		}
+
+
+
+
+
+
+
+
+
+
+//Calculate finger distance
+
+	  function fingerDistance(e)
+	  {
+		  return Math.sqrt( (e.touches[0].pageX -e.touches[1].pageX) * (e.touches[0].pageX - e.touches[1].pageX ) + (e.touches[0].pageY - e.touches[1].pageY) * (e.touches[0].pageY - e.touches[1].pageY));
+	  }
+
+
+
+
+
+//tracktransforms
+		function trackTransforms(ctx)
+		{
+			var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
+			var xform = svg.createSVGMatrix();
+			ctx.getTransform = function(){ return xform; };
+
+			var savedTransforms = [];
+			var save = ctx.save;
+			ctx.save = function(){
+				savedTransforms.push(xform.translate(0,0));
+				return save.call(ctx);
+			};
+			
+			var restore = ctx.restore;
+			ctx.restore = function(){
+				xform = savedTransforms.pop();
+				return restore.call(ctx);
+					};
+
+			var scale = ctx.scale;
+			ctx.scale = function(sx,sy){
+				xform = xform.scaleNonUniform(sx,sy);
+				return scale.call(ctx,sx,sy);
+					};
+			
+			var rotate = ctx.rotate;
+			ctx.rotate = function(radians){
+				xform = xform.rotate(radians*180/Math.PI);
+				return rotate.call(ctx,radians);
+			};
+			
+			var translate = ctx.translate;
+			ctx.translate = function(dx,dy){
+				xform = xform.translate(dx,dy);
+				return translate.call(ctx,dx,dy);
+			};
+			
+			var transform = ctx.transform;
+			ctx.transform = function(a,b,c,d,e,f){
+				var m2 = svg.createSVGMatrix();
+				m2.a=a; m2.b=b; m2.c=c; m2.d=d; m2.e=e; m2.f=f;
+				xform = xform.multiply(m2);
+				return transform.call(ctx,a,b,c,d,e,f);
+			};
+			
+			var setTransform = ctx.setTransform;
+			ctx.setTransform = function(a,b,c,d,e,f){
+				xform.a = a;
+				xform.b = b;
+				xform.c = c;
+				xform.d = d;
+				xform.e = e;
+				xform.f = f;
+				return setTransform.call(ctx,a,b,c,d,e,f);
+			};
+			
+			var pt  = svg.createSVGPoint();
+			ctx.transformedPoint = function(x,y)
+            {
+            	pt.x=x; pt.y=y;
+                var r = pt.matrixTransform(xform.inverse());
+				return {x : r.x, y : r.y};
+			}
+			}
+        
+
+      </script>
+</html>

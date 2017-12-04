@@ -1,0 +1,29 @@
+<div title="Live">
+  <div (click)="save()" style="height: 10px; width: 10px; background-color: black;"></div>
+   <label (click)="newPageChoice(true)" style="color:white; background-color: black;">Ajouter</label>
+  <label (click)="newPageChoice(false)" style="color:white; background-color: black;">Ajouter</label>
+</div>
+
+<div rows="*,124">
+  
+  <div rows="*,auto,auto">
+        <div>
+            <div #subscriber id="subscriber" style="width:400px;height:400px"></div>
+            <div #publisher id="publisher" style="vertical-align:top;text-align:right;width:200px; height:200px; margin-right:10px; margin-top:50px; border-radius:10px;"></div>
+        </div>
+  </div>
+  
+  
+    <iframe col="0" row="0" rowspan="2" #iframe src="https://goprof.fr/draw.html" #webView [ngClass]="{'hidden': activePage.id == 'camera'}"></iframe> 
+
+<div col="0" row="1" class="sheetContainer" orientation="horizontal">
+    <div  orientation="horizontal" >
+	 <!--<Label text="Camera" class="sheet camera" (click)="openPage('camera')" [ngClass]="{'active': activePage.id == 'camera'}" style="background-image: url('{{cameraPage.thumbnail}}');"></Label>-->
+        <div class="sheet camera" (click)="openPage('camera')" [ngClass]="{'active': activePage.id == 'camera'}" style="background-image: url('{{cameraPage.thumbnail}}');" #smallsubscriber id="smallsubscriber"></div>
+
+
+	    <Label class="sheet" *ngFor="let page of pages.slice().reverse()" (click)="openPage(page.id)" [ngClass]="{'active': activePage == page}" style="background-image: url('{{page.thumbnail}}');">{{page.title}}</Label>
+    </div>
+</div>
+
+</div>

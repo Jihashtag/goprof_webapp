@@ -1,0 +1,4 @@
+.btn {height:60px; vertical-align: top; margin:0;}
+.btn Label.over {vertical-align:top;  height:38px; border-width:1px; border-color:#c45177; color:#c45177;         horizontal-align:center; border-radius:20px; padding:0 20px; font-size: 16px; font-weight:bold;}
+.btn Label.under {vertical-align:top; height:39px; border-width:1px; border-color:#c45177; color:rgba(255,0,0,0); horizontal-align:center; border-radius:20px; padding:0 20px; font-size: 16px; font-weight:bold;}
+.btn Label.under2 {vertical-align:top; height:40px; border-width:1px; border-color:#c45177; color:rgba(255,0,0,0); horizontal-align:center; border-radius:20px; padding:0 20px; font-size: 16px; font-weight:bold;}

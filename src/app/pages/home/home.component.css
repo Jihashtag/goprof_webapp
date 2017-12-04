@@ -1,0 +1,10 @@
+/* module specific styles */
+
+
+#gameTeaser {color:#fff; font-size: 16px; text-align: center; font-weight: bold; background-color: rgba(0,0,0,.5); opacity:1; width: 320px; height: 130px; transform: translate(0,250);}
+
+
+.bigLinks {color: #000; font-size: 25px; font-family: "Supersonic Rocketship"; text-align: center; padding:10px 0; }
+
+.homeb {margin:0 20px;height:165px;text-align:center;}
+.homebtns{text-align:center;}

@@ -1,0 +1,71 @@
+<div class="loginscreen">
+    <!-- Login form-->
+    <div *ngIf="step == 'login'">
+            <div columns="150,*" rows="auto,auto" style="margin-top:40px; margin-bottom:20px;">
+                    <label class="formlabel">Email</label><br />
+                    <input id="username" type="mail" [(ngModel)]="loginForm.mail"><br />
+
+                    <label class="formlabel">Mot de passe</label><br />
+                    <input id="password" type="password" [(ngModel)]="loginForm.pass"><br />
+            </div>
+            <div columns="*,auto,auto,*" rows="auto" *ngIf="step == 'login'">
+                    <div><button (click)="openNone()" style="margin:5px;color:#666666">Retour</button></div>
+                    <div><button (click)="login()" style="margin:5px;" >Me connecter</button></div>    
+            </div>
+    </div>
+    <!-- Register form -->
+    <div *ngIf="step == 'register'">
+            <div columns="150,*" rows="auto,auto,auto,auto,auto,auto,auto,auto,auto"  style="margin-top:40px; margin-bottom:20px;">
+
+                    <label class="formlabel">Nom</label><br />
+                    <input [(ngModel)]="registerForm.lname"><br />
+
+                    <label class="formlabel">Prénom</label><br />
+                    <input [(ngModel)]="registerForm.fname"><br />
+
+                    <label class="formlabel">E-mail</label><br />
+                    <input type="mail" [(ngModel)]="registerForm.mail"><br />
+
+                    <label class="formlabel">Mot de passe</label><br />
+                    <input  type="password" [(ngModel)]="registerForm.pass"><br />
+
+                    <label class="formlabel">Mot de passe</label><br />
+                    <input  type="password" [(ngModel)]="registerForm.pass2"><br />
+
+                    <label class="formlabel">Besoin d'aide en</label><br />
+
+                     <div columns="*,auto,auto,*" rows="auto,auto">
+                        <button [highlight]="registerForm.need_math" (click)="registerForm.need_math = !registerForm.need_math" style="margin:5px;" color="#296062">Math</button>
+                        <button [highlight]="registerForm.need_histoire" (click)="registerForm.need_histoire = !registerForm.need_histoire" style="margin:5px;" color="#296062">Histoire</button>
+                        <button [highlight]="registerForm.need_geo" (click)="registerForm.need_geo = !registerForm.need_geo" style="margin:5px;" color="#296062">Geographie</button>
+                        <button [highlight]="registerForm.need_francais" (click)="registerForm.need_francais = !registerForm.need_francais" style="margin:5px;" color="#296062">Français</button>
+                    </div> 
+
+                    <label class="formlabel">Je suis en</label><br />
+
+                    <div columns="*,auto,auto,auto,*" rows="auto,auto">
+                            <button [highlight]="registerForm.classe == 'cm1'" (click)="registerForm.classe = 'cm1'" style="margin:5px;" color="#296062">cm1</button>
+                            <button [highlight]="registerForm.classe == 'cm2'" (click)="registerForm.classe = 'cm2'" style="margin:5px;" color="#296062">cm2</button>
+                            <button [highlight]="registerForm.classe == '6e'" (click)="registerForm.classe = '6e'" style="margin:5px;" color="#296062">6e</button>
+                            <button [highlight]="registerForm.classe == '5e'" (click)="registerForm.classe = '5e'" style="margin:5px;" color="#296062">5e</button>
+                            <button [highlight]="registerForm.classe == '4e'" (click)="registerForm.classe = '4e'" style="margin:5px;" color="#296062">4e</button>
+                            <button [highlight]="registerForm.classe == '3e'" (click)="registerForm.classe = '3e'" style="margin:5px;" color="#296062">3e</button>
+                        </div> 
+
+            </div>
+            <div columns="*,auto,auto,*" rows="auto" *ngIf="step == 'register'" style="margin-bottom:30;">
+                <button (click)="openNone()" style="margin:5px;"  color="#666666">Retour</button>
+                <button (click)="register()" style="margin:5px;">M'inscrire</button>    
+            </div>
+
+    </div>
+
+    <!-- nothing -->
+    <div *ngIf="step == 'none'">
+            <div columns="*,auto,auto,*" rows="auto" *ngIf="step == 'none'">
+                <div><button (click)="openLogin()" style="margin:5px;">Me connecter</button></div>
+                <div><button (click)="openRegister()" style="margin:5px;" color="#296062">M'inscrire</button></div>    
+            </div>
+    </div>
+
+</div>

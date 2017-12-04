@@ -1,0 +1,4 @@
+/* You can add global styles to this file, and also import other style files */
+body {margin: 0;background-image: url('/assets/images/back.jpg');background-size: 100%;}
+.mainContent {padding-top: 10px;}
+.mainContent .home {padding-top: 10px;display:block;margin:auto;text-align:center;}

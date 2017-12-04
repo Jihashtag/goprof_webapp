@@ -1,0 +1,42 @@
+<!-- menu client -->
+<header class="menu header">
+    <a class="logoprof" href="/"><img src="/assets/images/logo.png" style="margin: auto;padding-top: 10px;" height="50" id="logo" /> </a>
+    <ul class="topnav" id="myTopnav">
+        <li>
+            <Button class="menuLink" (click)="logout()" >Déconnexion</Button>
+        </li>
+        <li>
+            <button  (click)="goto('profile')" color="#2a6465" class="modprofileBtn">Modifier mon profil<img src="/assets/images/profilepic.jpg" class="profilepic" /></button>
+        </li>
+        <li>
+            <Button class="menuLink" (click)="goto('/live')" >Cours en ligne</Button>
+        </li>
+        <li>                        
+            <Button class="menuLink" (click)="goto('/jeux')" >Jeux</Button>
+        </li>
+        <li>
+            <Button class="menuLink" (click)="goto('/cours')" >Videos</Button>
+        </li>
+        <li>
+            <Button class="menuLink" (click)="goto('/agenda')" >Mon agenda</Button>
+        </li><!-- 
+        <li>
+            <Button class="menuLink" (click)="goto('/cours')" >Mes notifications</Button>
+        </li>
+        <li>
+            <Button class="menuLink" (click)="goto('/cours')" >Mes parametres</Button>
+        </li>
+        <li>
+            <Button class="menuLink" (click)="goto('/cours')" >Mes archives</Button>
+        </li>
+        <li>
+            <Button class="menuLink" (click)="goto('/cours')" >Mes crédits</Button>
+        </li> -->
+    </ul>
+</header>
+<div class="spikes menu"></div>
+
+
+<article style="padding-top: 80px;" id="appContainer">
+    <router-outlet></router-outlet>
+</article>

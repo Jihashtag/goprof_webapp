@@ -1,0 +1,34 @@
+
+
+.mainContent {background-size:375 667; background-image: ~/images/back.jpg; }
+
+
+#logo {width:80; horizontal-align:center; margin-top:25; margin-bottom:10;}
+
+.header {
+    background-color: #90c5a9;
+    height:80;
+}
+.spikes {
+    height:15;
+    background-size: 14 16;
+    background-color: #618673;
+    background-image: ~/images/border2.png;
+}
+
+.pageTitle {background-color: #618673;}
+.pageTitle Label {color: #ffffff; font-size:14; margin: 0 0 5 20; font-weight: bold;}
+
+.monthContainer {background-color: #838ea2; }
+.otherMonthBtn {padding:10 20; font-size: 20; color:#fff; margin:0;}
+.monthLabel {color: #ffffff; font-weight: bold; font-size: 14; horizontal-align:center; text-align: center; margin:0;}
+
+
+.daysContainer {background-color: #ffffff; }
+
+.day {border-width:1; border-color:#f3f3f3;}
+.day .dayLabel {color: #bbb; font-size: 11; padding:4;}
+.activeDay{border-color:#838ea2;  }
+
+.activeDay .dayLabel {color:#838ea2; }
+.activeMonth .dayLabel {color: #000;}

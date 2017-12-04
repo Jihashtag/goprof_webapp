@@ -1,0 +1,34 @@
+<div backgroundColor="white">
+    
+    <div [items]="sources" class="list-group" *ngIf="page == 'choice'">
+        <Template let-source="item">
+            <StackLayout class="list-group-item" (click)="close(source.value)">
+                <Label text="{{ source.label }}" class="label"></Label>
+            </StackLayout>
+        </Template>
+    </div>
+
+
+
+    <div *ngIf="page == 'camera'" style="background-color:rgba(0,0,0,1);">
+        <Placeholder class="live" *ngIf="page == 'camera'" (creatingView)="creatingView($event)" ></Placeholder>
+	    <div orientation="horizontal" horizontalAlignment="center">
+            <label text="&#xf030;" class="fa picture_take" (click)="takePicture()"></label>
+            <label text="&#xf00d;" class="fa picture_cancel" (click)="cancelTakePicture()"></label>
+        </div>
+    </div>   
+
+
+    <div [items]="data.filesModel.files" class="list-group" *ngIf="page == 'files'">
+        <Template let-file="item">
+            <div class="list-group-item" (click)="useFile(file)" orientation="horizontal">
+                <Image src="{{file.thumbnail}}" style="height:80; margin-right:30;"></Image>
+                <Label text="{{ file.title }}" class="label"></Label>
+            </div>
+        </Template>
+    </div>
+
+
+</div>
+
+ 
