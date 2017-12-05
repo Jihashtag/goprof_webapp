@@ -46,14 +46,31 @@ export class LiveComponent implements OnInit, AfterViewInit, OnDestroy {
         constructor(public data: Data, private appRef: ApplicationRef, private router: Router, private vcRef: ViewContainerRef) {
         }
 
+        initializeWebrtc() {
+            this.wvInterface = this.nativeWebView.contentWindow.oWebViewInterface;
+            console.log('initializing webrtc');
+            // listen for line draws
+            this.wvInterface.on('drawLine', (data) =>
+            {
+                alert('draw');
+                this.data.socket.emit('drawLine',data);
+            });
+
+            // thumbnail Updates
+            this.wvInterface.on('updateThumbnail', (data) =>
+            {
+                this.activePage.thumbnail = data;
+                this.data.refreshUI();
+            });
+
+            this.wvInterface.on('log', (data) =>
+            {
+                console.log(data);
+            });
+        }
 
 
         ngAfterViewInit() {
-            // initiate webrtc
-            this.nativeWebView = this.iframe.nativeElement;
-            this.wvInterface = this.nativeWebView.contentWindow.nsWebViewInterface;
-            console.log(this.wvInterface);
-            console.log('initializing webrtc');
             this.data.socket.on('tokBoxData', (data) => {
                 this.data.tokbox = data;
                 this.session = initSession(this.data.tokbox.api, this.data.tokbox.sid);
@@ -85,27 +102,8 @@ export class LiveComponent implements OnInit, AfterViewInit, OnDestroy {
             //      }
             //  });
 
-            // listen for line draws
-            this.wvInterface.on('drawLine', (data) =>
-            {
-                alert('draw');
-                this.data.socket.emit('drawLine',data);
-            });
-
-            // thumbnail Updates
-            this.wvInterface.on('updateThumbnail', (data) =>
-            {
-                this.activePage.thumbnail = data;
-                this.data.refreshUI();
-            });
-
-            this.wvInterface.on('log', (data) =>
-            {
-                console.log(data);
-            });
-
-
-
+            // initiate webrtc
+            this.nativeWebView = this.iframe.nativeElement;
 
             // Server communication
             this.data.socket.on('drawLine', (data) => {
@@ -171,7 +169,7 @@ export class LiveComponent implements OnInit, AfterViewInit, OnDestroy {
 
         newPageChoice(bootOnCamera) {
             console.log('newPageChoice');
-            var res = this.wvInterface = new newpageModalComponent(this.data);
+            var res =  new newpageModalComponent(this.data);
             if(res.page == 'camera'){}
             else if(res.page == 'file'){}
             else this.data.socket.emit('createPage',{ pageType : res.page, conversationID : 0 }); //res = blank, quad ou copy

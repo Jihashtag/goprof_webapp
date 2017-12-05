@@ -14,7 +14,7 @@
   </div>
   
   
-    <iframe col="0" row="0" rowspan="2" #iframe src="https://goprof.fr/draw.html" #webView [ngClass]="{'hidden': activePage.id == 'camera'}"></iframe> 
+    <iframe col="0" row="0" (load)="initializeWebrtc()" rowspan="2" #iframe src="https://goprof.fr/draw.html" #webView [ngClass]="{'hidden': activePage.id == 'camera'}"></iframe> 
 
 <div col="0" row="1" class="sheetContainer" orientation="horizontal">
     <div  orientation="horizontal" >
