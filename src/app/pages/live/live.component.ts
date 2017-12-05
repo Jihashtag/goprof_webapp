@@ -51,7 +51,7 @@ export class LiveComponent implements OnInit, AfterViewInit, OnDestroy {
         ngAfterViewInit() {
             // initiate webrtc
             this.nativeWebView = this.iframe.nativeElement;
-            this.wvInterface = this.nativeWebView.contentWindow.window.nsWebViewInterface;
+            this.wvInterface = this.nativeWebView.contentWindow.nsWebViewInterface;
             console.log(this.wvInterface);
             console.log('initializing webrtc');
             this.data.socket.on('tokBoxData', (data) => {
