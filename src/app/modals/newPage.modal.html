@@ -1,11 +1,11 @@
 <div backgroundColor="white">
     
     <div [items]="sources" class="list-group" *ngIf="page == 'choice'">
-        <Template let-source="item">
+        <ng-template let-source="item">
             <StackLayout class="list-group-item" (click)="close(source.value)">
                 <Label text="{{ source.label }}" class="label"></Label>
             </StackLayout>
-        </Template>
+        </ng-template>
     </div>
 
 
@@ -20,12 +20,12 @@
 
 
     <div [items]="data.filesModel.files" class="list-group" *ngIf="page == 'files'">
-        <Template let-file="item">
+        <ng-template let-file="item">
             <div class="list-group-item" (click)="useFile(file)" orientation="horizontal">
                 <Image src="{{file.thumbnail}}" style="height:80; margin-right:30;"></Image>
                 <Label text="{{ file.title }}" class="label"></Label>
             </div>
-        </Template>
+        </ng-template>
     </div>
 
 

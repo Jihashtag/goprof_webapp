@@ -1,4 +1,3 @@
-
-.coursTitle {color: #000; font-size: 20; font-family: "Supersonic Rocketship"; text-align: left; margin:5 10; }
-.coursDescription {color: rgba(0,0,0,.8); font-size: 16; text-align: left; margin:5 10; }
-.coursCredit {color: rgba(0,0,0,.5); font-size: 14; text-align: left; margin:5 10; }
+.videoThumb {width:50%;}
+.overlayer {background-color:rgba(0,0,0,.5);  }
+.overlayertext {text-align: center; color: #fff; font-weight: bold; font-size:15; width:100%; }

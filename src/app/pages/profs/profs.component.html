@@ -1,0 +1,16 @@
+<div>
+    <div *ngIf="data.profsModel.loaded">      
+        <div rows="auto" columns="80,*,auto" *ngFor="let prof of data.profsModel.profs" class="profBlock" (click)="openProf(prof,$event)">
+            <img class="avatar" src="https://goprof.fr/appdata/userpics/{{prof.id}}.jpg?" col="0" row="0" >
+            <div col="1" row="0">
+                    <Label class="profName">{{prof.fname}} {{prof.lname}}</Label>
+                    <Label class="profClasse" >{{prof.classe}}</Label>
+                    <Label class="profFooter" >note 4.2/5 heures 110</Label>
+            </div>
+
+            <Label class="profDays" textWrap="true" col="2" row="0" rowspan="2">lun mar mer</Label>
+        </div>
+    </div> 
+    <Label *ngIf="!data.profsModel.loaded" class="loadingText">Chargement des profs en cours...</Label>
+
+</div>

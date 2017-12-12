@@ -21,14 +21,20 @@ export class Data {
     user = {id:0, fname:"", lname:""};
     activeTab: number;
 
+    conversationsModel = {conversations:[], loaded:false};
+    openConversation:any = {loaded:false};
+
+    profsModel={profs:[], loaded:false};
+    openProf:any = null;
+    openProfAgendaModel:any = {elements:[], loaded:false};
+
+    videosModel={videos:[], loaded:false};
+    openVideo:any = null;
 
     appref;
     tokbox = {tok: '', sid: '', api: ''};
 
-    vidURL = '';
-
-
-  constructor(private appRef: ApplicationRef, private router: Router) {
+  constructor(private appRef: ApplicationRef, public router: Router) {
     this.appref = appRef;
     this.socket = io(server);
     this.socket.on('connect', () => {
@@ -37,43 +43,99 @@ export class Data {
     });
 
 
- //  contient model.name et model.data
-        this.socket.on('updateModel', (model) => {
+    this.socket.on('updateModel', (model) => {
 
+            console.log(' ------ updating model '+model.name+' -------');
+            console.log(model.data);
+            // update model data
+            this[model.name] = model.data;
 
-                // update model data
-                this[model.name] = model.data;
+            // set loaded flag to true
+            this[model.name].loaded = true;
+            if(model.name == "conversationsModel" && this.openConversation) {
+                 this.conversationsModel.conversations.forEach(conversation => {
+                     if(this.openConversation.id == conversation.id) {
+                         this.openConversation.last_message_time = conversation.last_message_time;
+                         this.openConversation.text = conversation.text;
+                         this.openConversation.users = conversation.users;
+                     }
+                 });
+             }
 
-                // set loaded flag to true
-                this[model.name].loaded = true;
+            //calendar events prof
+            if(model.name == "openProfAgendaModel")
+            {
+              this.openProfAgendaModel.loaded = false;
+              // this.openProfAgendaModel.elements = new Array<CalendarEvent>();
+              model.data.hours.forEach(hour => {
+                var startDate: Date = new Date(hour.start);
+                var endDate: Date = new Date(hour.end);
+                var text = "indisponible - "+hour.id;
+                var color = "#101010";
+                if(hour.available) { text = "libre - "+hour.id; color= "#99EF77"; }
+                // var event = new CalendarEvent(text, startDate, endDate, false, color);
+                this.openProfAgendaModel.elements.push(event);
+              });
 
-                // refresh des views
-                this.appRef.tick();
-                this.refreshUI();
+            }
 
-        });
+            //set loaded flag to true
+            this[model.name].loaded = true;
 
-
-
-        this.socket.on('userAlert', (data) => {
-            alert(data.message);
-        });
-
-
-         this.socket.on('tokBoxData', (data) => {
-            console.log(data);
-            this.tokbox = data;
+            // refresh des views
+            this.appRef.tick();
             this.refreshUI();
-        });
+
+    });
+
+    this.socket.on('updateMessages', (data) => {
+        console.log(' ------ updating chat -------');
+        if(!this.openConversation.loaded) {
+            this.openConversation = {};
+            this.openConversation.id = data.conversation_id;
+            this.openConversation.members = [];
+            this.openConversation.messages = data.messages;
+            this.openConversation.loaded = true;
+        }
+        else if(this.openConversation.id == data.conversation_id) {
+          this.openConversation.messages = data.messages;
+          this.openConversation.loaded = true;
+        }
+        this.appRef.tick();
+    });
+    this.socket.on('updateConversation', (data) => {
+
+        //notifier l'utilisateur si pas son propre message
+        if(data.sender.id != this.user.id ) {
+            if( (this.router.isActive('/messages', true) && this.openConversation.id == data.conversation_id) || !this.router.isActive('/messages', true)) {
+                alert("Psst! Tu as un nouveau message de la part de "+data.sender.fname+".");
+            }
+        } 
+        if(this.openConversation.id == data.conversation_id && this.router.isActive('/messages', true) ) this.socket.emit('getMessages', {conversation_id: data.conversation_id});
+        
+        //recharger les conversations  ->
+        this.socket.emit('getConversations');
+
+    });
+
+    this.socket.on('userAlert', (data) => {
+        alert(data.message);
+    });
 
 
-         this.socket.on('loginOK', (data) => {
-            this.user = data;
-            console.log(this.user);
-            this.router.navigate(['/home']);
-            this.refreshUI();
-        });
+     this.socket.on('tokBoxData', (data) => {
+        console.log(data);
+        this.tokbox = data;
+        this.refreshUI();
+    });
 
+
+     this.socket.on('loginOK', (data) => {
+        this.user = data;
+        console.log(this.user);
+        this.router.navigate(['/home']);
+        this.refreshUI();
+    });
 
 
   }

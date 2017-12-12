@@ -1,0 +1,23 @@
+<div>
+    <div id="conversationStack" *ngIf="data.conversationsModel.loaded">      
+        <div *ngFor="let conversation of this.data.conversationsModel.conversations;" class="messageBlock" (click)="openConversation(conversation,$event)" id="messagesContainer{{conversation.remoteID}}">
+            <div rows="auto" columns="80,*,auto"  >
+
+                <img class="avatar" *ngFor="let member of notMeArray(conversation.members); let i = index" src="https://goprof.fr/appdata/userpics/{{member.id}}.jpg?" col="0" row="0" [style.marginLeft.%]="i*8" >
+                <div col="1" row="0">
+                        <div orientation="horizontal">
+                                <Label class="messageName" *ngFor="let member of notMeArray(conversation.members)">{{member.fname}} ({{conversation.members[0].classe}})</Label>
+                        </div>
+                        <Label textWrap="true" class="messageExcerp">{{conversation.text}}</Label>
+                        <Label class="messageTime">{{humanTime(conversation.last_message_time)}}</Label>
+                </div>
+                <Label class="fa messageArrow" col="2" row="0" rowspan="2">&#xf105;</Label>
+                <Label class="newMessagesBullet" col="0" row="0" *ngIf="hasNewMessages(conversation)" rowspan="2">{{conversation.newMessages}}</Label>
+            </div>
+        </div>
+
+    </div> 
+
+    <Label *ngIf="!data.conversationsModel.loaded" class="loadingText">Chargement de tes conversations en cours...</Label>
+
+</div>

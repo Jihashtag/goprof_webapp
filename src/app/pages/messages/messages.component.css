@@ -1,0 +1,15 @@
+.mainContent {background-size:375px 667px;background-image: url('/images/back.jpg');}
+.radlist {background-color: transparent;}
+.pageTitle {background-color: #618673;}
+.pageTitle Label {color: #ffffff;font-size:14px;margin: 0 0 5px 20px;font-weight: bold;}
+.message {width:70%;border-radius:2px;background-color:rgba(50,50,50,0.8); padding:0;horizontal-align: left;margin:10px;margin-bottom:12px;padding:10px;}
+.message.ownMessage {background-color:rgba(4,204,240,0.8); horizontal-align: right;}
+.author {color:rgba(255,255,255,.5);font-size:11px;margin-bottom:4px;border-bottom-color:rgba(255,255,255,.2);border-bottom-width: 1px;}
+.text {color:#fff;font-size:12px;}
+.time {color:rgba(255,255,255,0.5);font-size:10px;margin:0;margin-left:20px;margin-bottom:5px;}
+.time.ownMessage {margin:0;margin-right:20px;text-align:right;}
+.local {opacity:0.3;}
+.newMessageContainer { margin-left:10px;margin-right:10px;border-radius:2px;background-color:#fff;margin-bottom:10px;}
+#newMessageContent { margin-left:10px;color: #222;font-size: 16px;padding-top:10px;}
+.sendMessageBtn {color : #04ccf0;padding:10px;font-size:20px;margin-right:10px;}
+.loadingText {text-align: center;margin:20px;color:#fff;}

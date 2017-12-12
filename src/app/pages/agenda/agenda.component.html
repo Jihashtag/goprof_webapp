@@ -1,24 +1,13 @@
-<div class="mainContent">
-        <div class="pageTitle">
-                <Label>Mon Agenda</Label>                
+<div class="monthContainer">
+        <div rows="auto" columns="auto,*,auto">
+                <label col="0" class="fa otherMonthBtn" (click)="changeMonth(-1)">&#xf0d9;</label>
+                <Label col="1" class="monthLabel">{{monthLabels[calendarNavigator.month()]}} {{calendarNavigator.year()}}</Label>  
+                <label col="2" class="fa otherMonthBtn" (click)="changeMonth(1)">&#xf0da;</label>
         </div>
-        <div class="monthContainer">
-                <GridLayout rows="auto" columns="auto,*,auto">
-                                <label col="0" class="fa otherMonthBtn" (click)="changeMonth(-1)">&#xf0d9;</label>
-                                <Label col="1" class="monthLabel">{{monthLabels[calendarNavigator.month()]}} {{calendarNavigator.year()}}</Label>  
-                                <label col="2" class="fa otherMonthBtn" (click)="changeMonth(1)">&#xf0da;</label>
-
-                </GridLayout>
-        </div>
-
-<!--
-        <GridLayout rows="*,*,*,*,*,*" columns="*,*,*,*,*,*,*" class="daysContainer">
-
-
-                        <div row="{{day.row}}" col="{{day.col}}" class="day" (tap)="activeDay = day.daykey" [ngClass]="{'activeMonth' : day.month == currentMonth, 'activeDay' : day.daykey == activeDay }" *ngFor="let day of pageDays"><Label class="dayLabel" text="c{{day.label}}"></Label></div>
-
-                </GridLayout>
-
-        -->
-        
 </div>
+<div rows="*,*,*,*,*,*" columns="*,*,*,*,*,*,*" class="daysContainer">
+
+        <div [row]="day.row" [col]="day.col" class="day" (click)="activeDay = day.daykey" [ngClass]="{'activeMonth' : day.month == currentMonth, 'activeDay' : day.daykey == activeDay }" *ngFor="let day of pageDays"><Label class="dayLabel" >{{day.label}}</Label></div>
+</div>
+        <radCalendar #cal eventsViewMode="Inline" [eventSource]="calendarEvents"></radCalendar>
+

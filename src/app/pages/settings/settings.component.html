@@ -1,0 +1,45 @@
+<div>
+        <div>
+                <img col="0" row="0" src="/assets/images/profilepic.jpg" class="profilepic">
+
+            <div columns="150,*" rows="auto,auto,auto,auto,auto,auto,auto,auto,auto"  style="margin-top:40px; margin-bottom:20px;">
+
+                    <label class="formlabel">Nom</label><br />
+                    <input [(ngModel)]="data.user.lname"><br />
+
+                    <label class="formlabel">Prénom</label><br />
+                    <input [(ngModel)]="data.user.fname"><br />
+
+                    <label class="formlabel">E-mail</label><br />
+                    <input type="mail" [(ngModel)]="data.user.mail"><br />
+
+                    <label class="formlabel">Mot de passe</label><br />
+                    <input  type="password" [(ngModel)]="data.user.pass"><br />
+
+                    <label class="formlabel">Mot de passe</label><br />
+                    <input  type="password" [(ngModel)]="data.user.pass2"><br />
+
+                    <label class="formlabel">Besoin d'aide en</label><br />
+
+                     <div columns="*,auto,auto,*" rows="auto,auto">
+                        <button [highlight]="data.user.need_math" (click)="data.user.need_math = !data.user.need_math" style="margin:5px;" color="#296062">Math</button>
+                        <button [highlight]="data.user.need_histoire" (click)="data.user.need_histoire = !data.user.need_histoire" style="margin:5px;" color="#296062">Histoire</button>
+                        <button [highlight]="data.user.need_geo" (click)="data.user.need_geo = !data.user.need_geo" style="margin:5px;" color="#296062">Geographie</button>
+                        <button [highlight]="data.user.need_francais" (click)="data.user.need_francais = !data.user.need_francais" style="margin:5px;" color="#296062">Français</button>
+                    </div> 
+
+                    <label class="formlabel">Je suis en</label><br />
+
+                    <div columns="*,auto,auto,auto,*" rows="auto,auto">
+                            <button [highlight]="data.user.classe == 'cm1'" (click)="data.user.classe = 'cm1'" style="margin:5px;" color="#296062">cm1</button>
+                            <button [highlight]="data.user.classe == 'cm2'" (click)="data.user.classe = 'cm2'" style="margin:5px;" color="#296062">cm2</button>
+                            <button [highlight]="data.user.classe == '6e'" (click)="data.user.classe = '6e'" style="margin:5px;" color="#296062">6e</button>
+                            <button [highlight]="data.user.classe == '5e'" (click)="data.user.classe = '5e'" style="margin:5px;" color="#296062">5e</button>
+                            <button [highlight]="data.user.classe == '4e'" (click)="data.user.classe = '4e'" style="margin:5px;" color="#296062">4e</button>
+                            <button [highlight]="data.user.classe == '3e'" (click)="data.user.classe = '3e'" style="margin:5px;" color="#296062">3e</button>
+                        </div> 
+
+            </div>
+            <div col="2"><button text="Enregistrer" (click)="save()" style="margin:5;"></button></div>
+        </div>
+    </div>

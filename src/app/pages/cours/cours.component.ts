@@ -19,10 +19,11 @@ export class CoursComponent implements OnInit {
         }
 
         ngOnInit() {
+          this.data.socket.emit('getVideos');
         }
 
-        openPlayer(filename) {
-          this.data.vidURL = 'https://goprof.fr/' + filename;
+        openPlayer(video) {
+          this.data.openVideo = video;
           this.router.navigate(['/player']);
         }
 

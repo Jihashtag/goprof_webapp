@@ -9,13 +9,10 @@ import { initSession, initPublisher } from '@opentok/client';
 
 declare function alert(message: string);
 
+import {MatDialog} from '@angular/material';
 
 // import { ModalDialogService } from 'nativescript-angular/directives/dialogs';
 import { newpageModalComponent } from './../../modals/newPage.modal';
-
-
-
-
 
 
 
@@ -43,7 +40,7 @@ export class LiveComponent implements OnInit, AfterViewInit, OnDestroy {
             console.log('oninit livecomponent');
         }
 
-        constructor(public data: Data, private appRef: ApplicationRef, private router: Router, private vcRef: ViewContainerRef) {
+        constructor(private modal: MatDialog, public data: Data, private appRef: ApplicationRef, private router: Router, private vcRef: ViewContainerRef) {
         }
 
         initializeWebrtc() {
@@ -169,10 +166,16 @@ export class LiveComponent implements OnInit, AfterViewInit, OnDestroy {
 
         newPageChoice(bootOnCamera) {
             console.log('newPageChoice');
-            var res =  new newpageModalComponent(this.data);
-            if(res.page == 'camera'){}
-            else if(res.page == 'file'){}
-            else this.data.socket.emit('createPage',{ pageType : res.page, conversationID : 0 }); //res = blank, quad ou copy
+            var res =  this.modal.open(newpageModalComponent, {
+            data: {bootOnCamera:bootOnCamera},
+            height:'500px',
+            width:'500px',
+            viewContainerRef: this.vcRef
+            }).afterClosed().subscribe(res => {
+                if(res == 'camera'){}
+                else if(res == 'file'){}
+                else this.data.socket.emit('createPage',{ pageType : res, conversationID : 0 }); //res = blank, quad ou copy
+            });
         }
 
 }

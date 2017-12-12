@@ -1,0 +1,24 @@
+<StackLayout *ngIf="data.openProf">
+	<img class="avatar" src="https://goprof.fr/appdata/userpics/{{data.openProf.id}}.jpg?" col="0" row="0" ><Label class="profName" >{{data.openProf.fname}} {{data.openProf.lname}}</Label>
+<GridLayout columns="*,auto,*">
+	<StackLayout col="1" orientation="horizontal" class="stars">
+		<Label class="star fa">&#xf005;</Label>
+		<Label class="star fa">&#xf005;</Label>
+		<Label class="star fa">&#xf005;</Label>
+		<Label class="star fa">&#xf005;</Label>
+		<Label class="star fa">&#xf006;</Label>
+	</StackLayout>
+</GridLayout>
+<StackLayout>
+	<Label class="boldtext">Enseigne</Label>
+	<Label class="text" textwrap="true">{{data.openProf.classe}}</Label>
+	<Label class="boldtext" >Surtout disponible le"</Label>
+	<Label class="text" textwrap="true">Lundi, Mercredi, Vendredi</Label>
+	<Label class="boldtext" >Commentaire du professeur</Label>
+	<Label class="text" textwrap="true" >{{data.openProf.bio}}</Label>
+</StackLayout>
+	<gridLayout columns="*,auto,auto,*" rows="auto">
+		<StackLayout col="1"><button (click)="rdv()" style="margin:5px;"  color="#C45177">Prendre rendez-vous</button></StackLayout>
+		<StackLayout col="2"><button (click)="openConversation()" color="#2E6465" style="margin:5px;" >Discuter</button></StackLayout>    
+	</gridLayout>
+</StackLayout> 

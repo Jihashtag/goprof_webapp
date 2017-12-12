@@ -1,0 +1,10 @@
+<GridLayout>
+    <RadListView [items]="notifs" pullToRefresh="true" (pullToRefreshInitiated)="pull($event)" swipeActions="true" class="radlist">
+    <ng-template tkListItemTemplate let-item="item">
+        <StackLayout orientation="vertical" class="notif">
+            <Label class="notifTexte" >{{item.text}}</Label>
+            <Label class="notifDate" >{{item.date}}</Label>
+        </StackLayout>
+    </ng-template>
+    </RadListView>
+</GridLayout> 

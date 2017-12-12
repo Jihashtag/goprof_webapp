@@ -1,0 +1,4 @@
+<StackLayout class="pageTitle">
+    <Label text="Prendre rendez-vous avec {{data.openProf.fname}} {{data.openProf.lname}}"></Label>                
+</StackLayout>
+<radCalendar #cal eventsViewMode="Inline" [eventSource]="data.openProfAgendaModel.elements" (inlineEventSelected)="hourTap($event)" *ngIf="data.openProfAgendaModel.loaded"></radCalendar>

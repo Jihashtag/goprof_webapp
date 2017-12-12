@@ -1,0 +1,39 @@
+<div rows="auto,*,auto" class="mainContent">
+
+   <div row="0">
+        <div class="header">
+            <img src="/assets/images/logo.png" id="logo" >
+        </div>
+        <div class="spikes">                
+        </div>
+        <div class="pageTitle" orientation="horizontal" *ngIf="data.openConversation.loaded">
+            <Label>messages avec</Label>                
+            <Label *ngFor="let member of notMeArray(data.openConversation.members)">{{member.fname}}</Label>                
+        </div>
+    </div>      
+    <div *ngIf="data.openConversation.loaded" row="1" #scrollview id="scrollview" >
+                    
+        <div rows="*" style="padding-top:45px;">
+        <div row="0">
+
+            <div rows="auto,auto" *ngFor="let message of data.openConversation.messages;">
+                <Label row="0" class="time" [ngClass]="{'ownMessage': message.user_id == data.user.id}" *ngIf="!message.local" >{{humanTime(message.time)}}</Label>
+                <Label row="0" class="time" [ngClass]="{'ownMessage': message.user_id == data.user.id}" *ngIf="message.local">envoi...</Label>
+                <div class="message" row="1" [ngClass]="{'ownMessage': message.user_id == data.user.id, 'local': message.local}">
+                    <Label textWrap="true" class="author" *ngIf="message.user_id != data.user.id">{{id2name(message.user_id)}} a écrit :</Label>
+                    <Label textWrap="true" class="text">{{message.content}}</Label>
+                </div>
+                {{scrollDown(message.id)}}
+            </div>
+
+        </div>  
+        </div>
+    </div>
+    <Label row="1" *ngIf="!data.openConversation.loaded" class="loadingText">Chargement de tes messages en cours...</Label>
+
+    <div columns = "*,auto" class="newMessageContainer" row="2">
+        <textarea height="40" autocorrect="false" autocapitalizationType="none" [(ngModel)]="newMessage" col="0" id="newMessageContent"></textarea>
+        <Label class="fa sendMessageBtn" text="&#xf1d8;" (click)="sendMessage()" col="1"></Label>
+    </div>
+        
+</div> 

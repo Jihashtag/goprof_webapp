@@ -1,0 +1,8 @@
+.avatar {width:60px;height:60px;border-radius:30px;margin:10px;}
+.profBlock{margin:10 20px 0 20px;background-color:rgba(255,255,255,.7);border-radius:2px;}
+.profName{color:#2c3a42;font-size:13px;margin-top:5px;}
+.profClasse{color:rgba(44,58,66,.7);font-size:12px;margin-top:8px;}
+.profFooter{color:rgba(44,58,66,.5);font-size:12px;margin-top:8px;margin-bottom:5px;}
+.profDays{color:rgba(44,58,66,.5);margin-left:15px;text-align:right;margin-right:10px;font-size:20px;}
+.newMessagesBullet{background-color:#fff;border-radius:8px;color:rgba(162,196,213,1);font-weight:bold;margin-left:0;width:16px;height:16px;horizontal-align:left;vertical-align:top;text-align:center;margin:2px;border-color:rgba(162,196,213,0.8);border-width:1px;}
+.loadingText{text-align:center;margin:20px;color:#fff;}

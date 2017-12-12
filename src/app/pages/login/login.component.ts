@@ -15,7 +15,7 @@ declare function alert(message: string);
 export class LoginComponent implements OnInit {
         step="none";
         registerForm:any = {fname:"", lname:"", mail:"", pass:"", pass2:"", need_math:false, need_histoire:false, need_francais:false, need_geo:false, classe:"cm1"};
-        loginForm:any = {mail:"vincent@site47.fr", pass:""}
+        loginForm:any = {mail:"", pass:""}
 
 
         constructor(public data: Data, private appRef: ApplicationRef, public router: Router) {

@@ -1,0 +1,4 @@
+.formlabel {font-size:14px;color:#555;padding:10px;margin:5px 20px 5px 5px;font-weight:bold;}
+textarea {font-size:14px;color:#333;padding:10px;margin:5px 20px 5px 5px;border-color:rgba(0,0,0,.6);border-width:0 0 1px 0; }
+
+.profilepic {border-radius:90px;width:180px;height:180px;border-color:#ffffff;border-width:1px;margin:20px;margin-bottom:0;margin-top:40px;horizontal-align:center;}

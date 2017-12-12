@@ -6,37 +6,29 @@
             <Button class="menuLink" (click)="logout()" >Déconnexion</Button>
         </li>
         <li>
-            <button  (click)="goto('profile')" color="#2a6465" class="modprofileBtn">Modifier mon profil<img src="/assets/images/profilepic.jpg" class="profilepic" /></button>
+            <button  (click)="goto('settings')" color="#2a6465" class="modprofileBtn">Modifier mon profil<img src="/assets/images/profilepic.jpg" class="profilepic" /></button>
         </li>
         <li>
-            <Button class="menuLink" (click)="goto('/live')" >Cours en ligne</Button>
+            <Button class="menuLink" (click)="goto('/live')" >Profs</Button>
         </li>
         <li>                        
-            <Button class="menuLink" (click)="goto('/jeux')" >Jeux</Button>
+            <Button class="menuLink" (click)="goto('/game')" >Jeux</Button>
         </li>
         <li>
             <Button class="menuLink" (click)="goto('/cours')" >Videos</Button>
         </li>
         <li>
-            <Button class="menuLink" (click)="goto('/agenda')" >Mon agenda</Button>
-        </li><!-- 
-        <li>
-            <Button class="menuLink" (click)="goto('/cours')" >Mes notifications</Button>
+            <Button class="menuLink" (click)="goto('/agenda')" >Agenda</Button>
         </li>
         <li>
-            <Button class="menuLink" (click)="goto('/cours')" >Mes parametres</Button>
+            <Button class="menuLink" (click)="goto('/conversations')" >Messages</Button>
         </li>
         <li>
-            <Button class="menuLink" (click)="goto('/cours')" >Mes archives</Button>
+            <Button class="menuLink" (click)="goto('/notifications')" >Notifications</Button>
         </li>
-        <li>
-            <Button class="menuLink" (click)="goto('/cours')" >Mes crédits</Button>
-        </li> -->
     </ul>
 </header>
 <div class="spikes menu"></div>
-
-
 <article style="padding-top: 80px;" id="appContainer">
     <router-outlet></router-outlet>
 </article>

@@ -1,8 +1,8 @@
 <div class="mainContent">
-	<div class="home" style="margin-right: 25%;"><img src="/assets/images/b1.png" class="homeb" (click)="openLive()">
-	<button class="homebtns" (click)="openLive()" color="#2a6465">Cours en ligne</button></div>
-	<div class="home" style="margin-left: 25%;"><img src="/assets/images/b2.png" class="homeb" (click)="opengame()" >
-	<button class="homebtns" (click)="opengame()" color="#c45177">Jeux</button></div>
-	<div class="home" style="margin-right: 25%;"><img src="/assets/images/b3.png" class="homeb" (click)="openCours()" >
-	<button class="homebtns"(click)="opencours()" color="#cca752">Videos</button></div>
+	<div class="home" style="margin-right: 25%;"><img src="/assets/images/b1.png" class="homeb" (click)="goto('live')">
+	<button class="homebtns" (click)="goto('live')" color="#2a6465">Cours en ligne</button></div>
+	<div class="home" style="margin-left: 25%;"><img src="/assets/images/b2.png" class="homeb" (click)="goto('game')" >
+	<button class="homebtns" (click)="goto('game')" color="#c45177">Jeux</button></div>
+	<div class="home" style="margin-right: 25%;"><img src="/assets/images/b3.png" class="homeb" (click)="goto('cours')" >
+	<button class="homebtns"(click)="goto('cours')" color="#cca752">Videos</button></div>
 </div>

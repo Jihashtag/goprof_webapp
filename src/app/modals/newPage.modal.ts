@@ -1,5 +1,6 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, Inject } from "@angular/core";
 // import { ModalDialogParams } from "nativescript-angular/directives/dialogs";
+import {MAT_DIALOG_DATA} from '@angular/material';
 import { Data } from "../shared/data/data.service";
 
 // import * as camera from "nativescript-camera";
@@ -60,7 +61,7 @@ export class newpageModalComponent implements OnDestroy {
 
     sockedSentCreatePageWithThis = this.sockedSentCreatePage.bind(this)
  
-    public constructor(public data:Data/*, private params: ModalDialogParams*/) {
+    public constructor(public data:Data, @Inject(MAT_DIALOG_DATA) private params:any) {
         this.sources = [
             {label:"Depuis mon appareil photo", value:"camera"},
             {label:"Depuis mes fichiers", value:"files"},
@@ -70,7 +71,7 @@ export class newpageModalComponent implements OnDestroy {
             {label:"Dupliquer la page en cours", value:"copy"}
         ];
 
-        // if(params.context.bootOnCamera) this.page = "camera";
+        if(params.bootOnCamera) this.page = "camera";
 
 
 
@@ -91,12 +92,12 @@ export class newpageModalComponent implements OnDestroy {
         if(page.src == this.photoSrc) //c'est notre upload
         {
             // this.loader.hide();
-            // this.params.closeCallback("camera");
+            this.params.closeCallback("camera");
         }
         else if(page.pageType = "file")
         {
             // this.loader.hide();
-            // this.params.closeCallback("file");
+            this.params.closeCallback("file");
         }
     }
 
@@ -107,7 +108,7 @@ export class newpageModalComponent implements OnDestroy {
         if(res == "camera") this.page = "camera";
         else if(res == "files") this.page = "files";
 
-        // else this.params.closeCallback(res);
+        else this.params.closeCallback(res);
         console.log("modal.close");
     }
 

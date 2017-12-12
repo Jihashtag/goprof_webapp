@@ -1,26 +1,7 @@
 <div class="mainContent">
     <label class="topMargin"></label>
-
-    
-    <div columns="auto,*" (click)="openPlayer('output.mp4')" style="vertical-align:top; margin-top:10px;">
-        <img col="0" src="/assets/images/vignettesvideo/0.jpg" style="width:110px; height:110px; margin:0 5px 0 20px; border-radius:55px; border-width:3px; display:inline-block;border-color:#000;">
-        <div col="1" style="vertical-align:top;display:inline-block;">
-            <Label class="coursTitle" >Le participe passé</Label><br />
-            <Label class="coursDescription" >Comment reconnaitre le participe passé et eviter les fautes classiques.</Label><br />
-            <Label class="coursCredit" >Présenté par Agnes D - 1:58</Label><br />
+    <div class="videoThumb" *ngFor="let video of data.videosModel.videos" (click)="openPlayer(video)">
+        <img src="https://www.videos.goprof.fr/720/{{video.id}}.jpg?">
+        <div class="overlayer" rows="*,auto,*" columns="auto" [style.height]="((data.screenInfo().widthPixels/2)/data.screenInfo().scale)*0.5625">
+            <Label row="1" class="overlayertext" textWrap="true">{{video.titre}}</Label>
         </div>
-    </div>
-
-    <div columns="auto,*" (click)="openPlayer('output_notabene.mp4')" style="vertical-align:top; margin-top:10px;">
-        <img col="0" src="/assets/images/vignettesvideo/0.jpg" style="width:110px; height:110px; margin:0 5px 0 20px; border-radius:55px; border-width:3px; border-color:#000;display:inline-block;">
-        <div col="1" style="vertical-align:top;display:inline-block;">
-            <Label class="coursTitle" >Théorème de Thales</Label><br />
-            <Label class="coursDescription" >Comprendre et appliquer le théorème de Thales.</Label><br />
-            <Label class="coursCredit" >Présenté par Nota Bene - 3:12</Label><br/>
-        </div>
-    </div>
-
-</div>
-
-                
-

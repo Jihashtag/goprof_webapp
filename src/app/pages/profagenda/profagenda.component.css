@@ -1,9 +1,9 @@
 .monthContainer{background-color:#838ea2;}
-.otherMonthBtn{padding:10px20px;font-size:20px;color:#fff;margin:0;}
+.otherMonthBtn{padding:10px 20px;font-size:20px;color:#fff;margin:0;}
 .monthLabel{color:#ffffff;font-weight:bold;font-size:14px;horizontal-align:center;text-align:center;margin:0;}
 .daysContainer{background-color:#ffffff;}
 .day{border-width:1px;border-color:#f3f3f3;}
-.day.dayLabel{color:#bbb;font-size:11px;padding:4px;}
+.day .dayLabel{color:#bbb;font-size:11px;padding:4px;}
 .activeDay{border-color:#838ea2;}
-.activeDay.dayLabel{color:#838ea2;}
-.activeMonth.dayLabel{color:#000;}
+.activeDay .dayLabel{color:#838ea2;}
+.activeMonth .dayLabel{color: #000;}

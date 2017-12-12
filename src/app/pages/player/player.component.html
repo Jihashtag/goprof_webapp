@@ -2,7 +2,11 @@
 
 </ActionBar>
   <div >
-      <video id="nativeVideoPlayer" src="{{data.vidURL}}" autoplay="true" height="100%" width="100%" controls="true" (finished)="videoFinished"></video>
+      <video id="nativeVideoPlayer" src="{{data.openVideo.videoURL}}" autoplay="true" height="100%" width="100%" controls="true" (finished)="videoFinished"></video>
+      <div class="descriptionContainer"  row="3" *ngIf="showInfo">  
+                <label class="description" textwrap="true" text="{{data.openVideo.description}}"></label>
+                <label class="description" textwrap="true" text="Video par {{data.openVideo.nom}}"></label>              
+       </div>  
   </div>
 
 
