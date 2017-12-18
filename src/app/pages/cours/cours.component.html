@@ -2,6 +2,6 @@
     <label class="topMargin"></label>
     <div class="videoThumb" *ngFor="let video of data.videosModel.videos" (click)="openPlayer(video)">
         <img src="https://www.videos.goprof.fr/720/{{video.id}}.jpg?">
-        <div class="overlayer" rows="*,auto,*" columns="auto" [style.height]="((data.screenInfo().widthPixels/2)/data.screenInfo().scale)*0.5625">
+        <div class="overlayer" rows="*,auto,*" columns="auto">
             <Label row="1" class="overlayertext" textWrap="true">{{video.titre}}</Label>
         </div>

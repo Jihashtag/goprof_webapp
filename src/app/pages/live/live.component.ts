@@ -41,6 +41,7 @@ export class LiveComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         constructor(private modal: MatDialog, public data: Data, private appRef: ApplicationRef, private router: Router, private vcRef: ViewContainerRef) {
+            this.data.tokbox = data.tokbox;
         }
 
         initializeWebrtc() {
@@ -68,8 +69,8 @@ export class LiveComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
         ngAfterViewInit() {
-            this.data.socket.on('tokBoxData', (data) => {
-                this.data.tokbox = data;
+            // this.data.socket.on('tokBoxData', (data) => {
+            //     this.data.tokbox = data;
                 this.session = initSession(this.data.tokbox.api, this.data.tokbox.sid);
                 this.session.subscriber = this.subscriber.nativeElement;
                 let session = this.session;
@@ -90,7 +91,7 @@ export class LiveComponent implements OnInit, AfterViewInit, OnDestroy {
                     session.publish(publisher);
                   }
                 });
-            });
+            // });
 
             // loading languages in dropdown, on load of webView.
             // this.nativeWebView.on('loadFinishedEvent', (args: LoadEventData) => {

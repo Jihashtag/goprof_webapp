@@ -1,68 +1,15 @@
-.menuIcon {horizontal-align:left; padding:20px; color:black; vertical-align:top; margin-top:17px; font-size: 24px; }
-
-.menu {width: 100%;position: fixed !important;top: 0;z-index: 2;}
-.spikes {
-	margin-top:80px;
-    height:15px;
-    background-size: 14px 16px;
-    background-image: url('/assets/images/border.png');
-}
-.header {
-    background-color: #098d8b;
-    height:80px;
-}
-.logoprof {
-    background: none;
-    border: none;
-    z-index: 3;
-    padding: 5px 0 0 50px;
-    display: inline-block;
-}
-ul.topnav {
-    font-family: montserrat;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    box-sizing: content-box;
-    position: absolute;
-    height: 100%;
-    right: 0;
-    top: 0;
-}
-ul.topnav li {
-    box-sizing: content-box;
-    display: inline-block;
-    height: 100%;
-    vertical-align: top;
-    font-size: 0.9em;
-}
-ul.topnav li {
-    float: right;
-}
-ul.topnav li button {
-    padding-left: 20px;
-    padding-right: 20px;
-    line-height: 50px;
-    display: inline-block;
-    color: white;
-    text-align: center;
-    transition: 0.3s;
-    height: 100%;
-    width: auto;
-    background: none;
-	border: none;
-    font-weight: 500;
-}
-ul.topnav li:not(:first-child) button:hover {
-    color: white;
-    background-color: #418193;
-}
-.menuTitle{color: #777; font-size: 17px; margin:20px 20px 10px; text-transform: uppercase;}
-.menuLink{color: black; font-size: 15px; padding:8px; margin-left:20px; text-align: left; }
-
-
-.profilepic {border-radius:60px; width:45px; height:45px; border-color: #ffffff; border-width:1px;}
-.modprofileBtn { height: auto!important;}
-
-.ruler {height:1px; background-color: rgba(255,255,255,.3); margin:0 20px 0 20px}
+.menuIcon{padding:20px;color:black;vertical-align:top;margin-top:17px;font-size:24px;}
+.menu{width:100%;position:fixed!important;top:0;z-index:2;}
+.spikes{margin-top:80px;height:15px;background-size:14px 16px;background-image:url('/assets/images/border.png');}
+.header{background-color:#098d8b;height:80px;}
+.logoprof{background:none;border:none;z-index:3;padding:5px 0 0 50px;display:inline-block;}
+ul.topnav{list-style-type:none;margin:0;padding:0;overflow:hidden;box-sizing:content-box;position:absolute;height:100%;right:0;top:0;}
+ul.topnav li{box-sizing:content-box;display:inline-block;height:100%;vertical-align:top;font-size:0.9em;}
+ul.topnav li{float:right;}
+ul.topnav li button{padding-left:20px;padding-right:20px;line-height:50px;display:inline-block;color:white;text-align:center;transition:0.3s;height:100%;width:auto;background:none;border:none;font-weight:500;}
+ul.topnav li:not(:first-child) button:hover{color:white;background-color:#418193;}
+.menuTitle{color:#777;font-size:17px;margin:20px 20px 10px;text-transform:uppercase;}
+.menuLink{color:black;font-size:15px;padding:8px;margin-left:20px;text-align:left;}
+.profilepic{border-radius:60px;width:45px;height:45px;border-color:#ffffff;border-width:1px;}
+.modprofileBtn{height:auto!important;}
+.ruler{height:1px;background-color:rgba(255,255,255,.3);margin:0 20px 0 20px}

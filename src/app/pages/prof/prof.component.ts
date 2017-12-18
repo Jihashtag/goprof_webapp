@@ -4,13 +4,9 @@ import { Data } from "../../shared/data/data.service";
 import * as moment from 'moment';
 
 
-
-
-
-
 @Component({
   moduleId: module.id,
-  selector: "ns-prof",
+  selector: "app-prof",
   templateUrl: "prof.component.html",
   styleUrls: ["prof.component.css"]
 })

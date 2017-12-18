@@ -21,6 +21,9 @@ export class Data {
     user = {id:0, fname:"", lname:""};
     activeTab: number;
 
+    notificationsModel = {notifications:[], loaded:false};
+    demandesModel = {demandes:[], loaded:false};
+
     conversationsModel = {conversations:[], loaded:false};
     openConversation:any = {loaded:false};
 
@@ -30,6 +33,8 @@ export class Data {
 
     videosModel={videos:[], loaded:false};
     openVideo:any = null;
+
+    order:any = {};
 
     appref;
     tokbox = {tok: '', sid: '', api: ''};
@@ -50,8 +55,6 @@ export class Data {
             // update model data
             this[model.name] = model.data;
 
-            // set loaded flag to true
-            this[model.name].loaded = true;
             if(model.name == "conversationsModel" && this.openConversation) {
                  this.conversationsModel.conversations.forEach(conversation => {
                      if(this.openConversation.id == conversation.id) {
@@ -84,7 +87,7 @@ export class Data {
 
             // refresh des views
             this.appRef.tick();
-            this.refreshUI();
+            // this.refreshUI();
 
     });
 
@@ -126,7 +129,7 @@ export class Data {
      this.socket.on('tokBoxData', (data) => {
         console.log(data);
         this.tokbox = data;
-        this.refreshUI();
+        // this.refreshUI();
     });
 
 

@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-body {margin: 0;background-image: url('/assets/images/back.jpg');background-size: 100%;}
-.mainContent {padding-top: 10px;}
-.mainContent .home {padding-top: 10px;display:block;margin:auto;text-align:center;}
+body{margin:0;background-image:url('/assets/images/back.jpg');background-size:100% 100%;background-repeat:no-repeat;min-height:100vh;display:block;}
+.mainContent{padding-top:30px;}
+.mainContent .home{padding-top:10px;display:block;margin:auto;text-align:center;}
+.fa{font-family:"FontAwesome";}
+.supersonic{font-family:"Supersonic Rocketship";}
